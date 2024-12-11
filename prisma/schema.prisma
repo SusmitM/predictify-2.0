@@ -28,7 +28,7 @@ id String @id @default(auto()) @map("_id") @db.ObjectId
 email String @unique
 password String?
 isVerified Boolean
-verificationCode Int?
+verificationCode String?
 extractedData FileData[]
 createdAt   DateTime @default(now())
 updatedAt   DateTime @default(now()) @updatedAt
