@@ -1,6 +1,6 @@
 import React from 'react'
 
-const page = () => {
+const Page = () => {
   return (
     <div className="min-h-screen bg-white text-red-500 overflow-hidden">
       Dashboard
@@ -8,4 +8,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

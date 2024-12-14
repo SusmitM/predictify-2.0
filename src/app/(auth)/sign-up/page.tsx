@@ -20,7 +20,7 @@ import { SIGN_UP } from "../../../../graphql/mutations";
 import client from "lib/apollo-client";
 import { ApiResponse } from "@/types/ApiResponse";
 
-const page = () => {
+const Page = () => {
   const { toast } = useToast();
   const router = useRouter();
 
@@ -206,4 +206,4 @@ const handleError = (error: any) => {
   );
 };
 
-export default page;
+export default Page;

@@ -8,14 +8,13 @@ import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
 import { Spotlight } from '@/components/ui/spotlight';
 import { FeatureCard } from '@/components/ui/feature-card';
 
-import React from 'react'
 import { Button } from '@/components/ui/button';
 
 
 
 
 
-const page = () => {
+const Page = () => {
   const words = [
     { text: "Transform", className: "text-purple-400" },
     { text: "your", className: "text-gray-100" },
@@ -102,4 +101,4 @@ const page = () => {
   );
 }
 
-export default page
+export default Page

@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Meteors } from '../../../components/ui/meteor-preview';
 
-const page = () => {
+const Page = () => {
   return (
     <div className="relative w-full min-h-screen bg-gray-950 flex items-center justify-center p-4 overflow-hidden">
       <div className="absolute inset-0">
@@ -72,7 +72,7 @@ const page = () => {
             </button>
 
             <p className="text-center text-gray-400 text-sm">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href="/sign-up" className="text-purple-400 hover:text-purple-300">
                 Sign up
               </Link>
@@ -84,4 +84,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

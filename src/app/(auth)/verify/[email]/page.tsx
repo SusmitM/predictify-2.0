@@ -24,7 +24,7 @@ import { z } from "zod";
 
 import { ApiResponse } from "@/types/ApiResponse";
 
-const page = () => {
+const Page = () => {
   const [verify, {loading}] = useMutation(VERIFY, {
     client,
     onCompleted(data, clientOptions) {
@@ -158,4 +158,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
