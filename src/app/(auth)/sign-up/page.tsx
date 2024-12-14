@@ -19,6 +19,7 @@ import { useMutation } from "@apollo/client";
 import { SIGN_UP } from "../../../../graphql/mutations";
 import client from "lib/apollo-client";
 import { ApiResponse } from "@/types/ApiResponse";
+import { signIn } from "next-auth/react";
 
 const Page = () => {
   const { toast } = useToast();
@@ -142,8 +143,10 @@ const handleError = (error: any) => {
                     <Input
                       {...field}
                       placeholder="you@example.com"
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
-                    />
+                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg
+                       focus:outline-none focus:border-2  focus:border-purple-500 text-white"
+                       style={{ boxShadow: "none" }}
+                       />
                     <p className="text-sm text-muted-foreground">
                       We&apos;ll send you a verification code
                     </p>
@@ -162,7 +165,9 @@ const handleError = (error: any) => {
                     <Input
                       {...field}
                       type="password"
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg
+                      focus:outline-none focus:border-2  focus:border-purple-500 text-white"
+                      style={{ boxShadow: "none" }}
                       placeholder="••••••••"
                     />
                     <FormMessage />
@@ -184,6 +189,9 @@ const handleError = (error: any) => {
                 <hr className="flex-grow border-t border-white" />
               </div>
               <Button
+               onClick={() => {
+                signIn("google", { callbackUrl: "/" });
+              }}
                 className="w-full py-3 px-4 text-sm rounded-xl flex gap-2 bg-white border-2 border-border text-[#565656] hover:text-white hover:border-black"
               >
                 <Image src={GoogleIcon} alt="Google Icon" />

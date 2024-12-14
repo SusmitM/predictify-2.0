@@ -135,7 +135,9 @@ const Page = () => {
                     </FormLabel>
                     <Input
                       {...field}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg
+                      focus:outline-none focus:border-2  focus:border-purple-500 text-white"
+                      style={{ boxShadow: "none" }}
                     />
 
                     <FormMessage />
