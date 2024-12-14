@@ -27,11 +27,14 @@ const page = () => {
   const [signUp, { loading }] = useMutation(SIGN_UP, {
     client,
     onCompleted: (data) => {
-      handleSignUpResponse(data);
+      
+      handleSignUpResponse(data.signUp);
     },
     onError: (error) => {
+      console.error("Error while signup:", error); 
       handleError(error);
     },
+    errorPolicy: "all", 
   });
 
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -47,34 +50,34 @@ const page = () => {
     const { email, password } = data;
 
     try {
-      const response = await signUp({ variables: { email, password } });
+      const response = await signUp({ variables: { email, password },errorPolicy: "all" },);
      
-    } catch (error:unknown) {
-      console.error("Error during sign up:", error);
-      handleError(error as Error);
+    } catch (error) {
+
+      handleError(error);
     }
   };
 
 
-  const handleSignUpResponse = async  (data: any) => {
+  const handleSignUpResponse = async  (data: ApiResponse) => {
    
-    if (!data.signUp.success) {
+    if (!data.success) {
         toast({
             title:"Signup failed",
-            description: data.signUp.message,
+            description: data.message,
             variant: 'destructive', 
         });
+
     } else {
         toast({
             title: "Sign-up successful!",
-          description:data.signUp.message,
+          description:data.message,
         });
+        router.replace(`/verify/${data?.data?.email}`);
     }
 };
 
 const handleError = (error: any) => {
-  console.error("Signup failed",error)
-
   const description =
     error.graphQLErrors?.[0]?.message ||
     error.networkError?.message ||

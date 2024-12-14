@@ -6,11 +6,18 @@ mutation signUp($email: String!, $password: String){
     success
     message
     data {
-      id
       email
-      isVerified
     }
   }
 }
+`
 
+
+export const VERIFY=gql` 
+mutation verify($email:String!,$verificationCode:String!){
+  verify(email:$email,verificationCode:$verificationCode){
+    success
+    message
+  }
+}
 `
