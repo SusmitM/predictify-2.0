@@ -182,8 +182,9 @@ const handleError = (error: any) => {
               >
                 Create Account
               </Button>
-
-              <div className="flex items-center">
+            </form>
+          </Form>
+          <div className="flex items-center py-4">
                 <hr className="flex-grow border-t border-white" />
                 <p className="mx-2 text-sm text-white">or</p>
                 <hr className="flex-grow border-t border-white" />
@@ -197,7 +198,7 @@ const handleError = (error: any) => {
                 <Image src={GoogleIcon} alt="Google Icon" />
                 <p>Sign up with Google</p>
               </Button>
-              <p className="text-center text-gray-400 text-sm">
+              <p className="text-center text-gray-400 text-sm pt-2">
                 Already have an account?{" "}
                 <Link
                   href="/sign-in"
@@ -206,8 +207,6 @@ const handleError = (error: any) => {
                   Sign in
                 </Link>
               </p>
-            </form>
-          </Form>
         </div>
       </motion.div>
     </div>
