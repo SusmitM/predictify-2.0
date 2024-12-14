@@ -29,6 +29,7 @@ email String @unique
 password String?
 isVerified Boolean
 verificationCode String?
+verifyCodeExpiry DateTime?
 extractedData FileData[]
 createdAt   DateTime @default(now())
 updatedAt   DateTime @default(now()) @updatedAt

@@ -55,20 +55,7 @@ const page = () => {
     }
   };
 
-  // const handleSignUpResponse = (data: any) => {
-  //   console.log("🚀 ~ handleSignUpResponse ~ data:", data)
-  //   if (data.signUp.success) {
-  //     toast({
-  //       title: "Success",
-  //       description: data.signUp.message || "SignUp Successful",
-  //     });
-      
-  //     const returnedEmail = data.signUp.data.email; 
-  //     router.replace(`/verify/${returnedEmail}`);
-  //   } else {
-  //     handleError(data.signUp.message);
-  //   }
-  // };
+
   const handleSignUpResponse = async  (data: any) => {
    
     if (!data.signUp.success) {
@@ -85,14 +72,33 @@ const page = () => {
     }
 };
 
-  const handleError = (data:any) => {
-    console.log("🚀 ~ handleError ~ error:", data)
-    toast({
-      title: "Signup failed",
-      description: data.signUp.message || "Signup failed",
-      variant: "destructive",
-    });
-  };
+const handleError = (error: any) => {
+  console.error("Signup failed",error)
+
+  const description =
+    error.graphQLErrors?.[0]?.message ||
+    error.networkError?.message ||
+    "An unexpected error occurred. Please try again later.";
+    
+    const code=error.graphQLErrors?.[0]?.code;
+   
+    if(code==="INTERNAL_SERVER_ERROR"){
+      toast({
+        title:"Signup failed",
+        description:"An unexpected error occured. Please try again later",
+        variant:"destructive"
+      })
+      return
+    }
+   
+  toast({
+    title: "Signup failed",
+    description,
+    variant: "destructive",
+  });
+  
+};
+
 
   return (
     <div className="relative w-full min-h-screen bg-gray-950 flex items-center justify-center p-4 overflow-hidden">
