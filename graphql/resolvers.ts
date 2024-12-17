@@ -29,10 +29,12 @@ export const resolvers = {
         });
 
         if (!user) {
-          return {
-            success: false,
-            message: "No user found with the provided userId",
-          };
+          throw new GraphQLError("No user found with the provided userId", {
+            extensions: {
+              code: "UNREGISTERED_USER",
+            },
+          });
+         
         }
         return {
           success: true,
@@ -41,10 +43,7 @@ export const resolvers = {
         };
       } catch (error) {
         console.error("Failed to get user", error);
-        return {
-          success: false,
-          message: "Failed to find user",
-        };
+        throw error
       }
     },
     getExtractedData: async (_: any) => {
@@ -262,6 +261,13 @@ export const resolvers = {
             },
           });
         }
+        if(!args.filename || !args.uniqueFilename){
+          throw new GraphQLError("Parameters Missing", {
+            extensions: {
+              code: "PARAMETERS_MISSING",
+            },
+          });
+        }
     
         const userId = user.id;
     
@@ -302,14 +308,18 @@ export const resolvers = {
         });
     
         if (!userRecord) {
-          throw new Error("User not found");
+          throw new GraphQLError("User not found", {
+            extensions: {
+              code: "USER_NOT_FOULD",
+            },
+          });
+         
         }
     
-        // Filter out any null or undefined values from updatedExtractedData
         const updatedExtractedData = [
           ...(userRecord.extractedData || []),
           newFileData,
-        ].filter((data): data is NonNullable<typeof data> => data !== null && data !== undefined);
+        ].filter((item): item is NonNullable<typeof item> => item !== null && item !== undefined);
     
         // Update the user record with the updated array
         const updatedUser = await prisma.user.update({
@@ -318,13 +328,22 @@ export const resolvers = {
             extractedData: updatedExtractedData,
           },
         });
+
+        if (!updatedUser) {
+          throw new GraphQLError("Database upload failed", {
+            extensions: {
+              code: "DB_UPLOAD_FAILED",
+            },
+          });
+        }
     
         return {
           success: true,
-          message: "Text extracted successfully",
+          message: "Text extracted and file saved to db successfully",
           content: extractedText,
         };
       } catch (error) {
+        
         console.error("Error in extract resolver:", error);
         throw error;
       }

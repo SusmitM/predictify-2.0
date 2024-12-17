@@ -16,7 +16,7 @@ export const typeDefs = gql`
     email: String!
     isVerified: Boolean!
     verificationCode: String
-    extractedData: [FileData!] # Make it nullable if it can be null, e.g., [FileData]
+    extractedData: [FileData] 
     createdAt: DateTime!
     updatedAt: DateTime!
   }
@@ -30,7 +30,7 @@ export const typeDefs = gql`
   type ExtractResponse {
     success: Boolean!
     message: String!
-    extractedData: [FileData] # Change to an array of FileData
+    extractedData: [FileData]! 
   }
 
   type Query {
@@ -38,10 +38,6 @@ export const typeDefs = gql`
     getExtractedData: ExtractResponse
   }
 
-  type Query {
-    getUser(id: ID!): UserResponse
-    getExtractedData: ExtractResponse
-  }
 
   type Mutation {
     signUp(email: String!, password: String, isVerified: Boolean, verificationCode: String): UserResponse

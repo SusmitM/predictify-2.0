@@ -14,7 +14,7 @@ const s3 = new S3Client({
   });
 
 
-export const POST=async(req:NextRequest,res:NextResponse)=>{
+export const POST=async(req:NextRequest)=>{
     const session = await getServerSession(authOptions);
  
   const user = session?.user as User;
