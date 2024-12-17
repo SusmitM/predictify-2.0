@@ -20,6 +20,7 @@ import { SIGN_UP } from "../../../../graphql/mutations";
 import client from "lib/apollo-client";
 import { ApiResponse } from "@/types/ApiResponse";
 import { signIn } from "next-auth/react";
+import { AppLogo } from "@/components/ui/app-logo";
 
 const Page = () => {
   const { toast } = useToast();
@@ -126,7 +127,8 @@ const handleError = (error: any) => {
         </div>
 
         <div className="bg-gray-900 rounded-2xl shadow-xl border border-gray-800 p-8 mt-16">
-          <h2 className="text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+        <div className=" mb-6 flex items-center justify-center"> <AppLogo showText={false} /></div>
+          <h2 className="text-3xl text-center font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
             Create Account
           </h2>
 
@@ -178,7 +180,7 @@ const handleError = (error: any) => {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg font-medium hover:from-purple-600 hover:to-pink-700 transition-colors"
+                className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-medium hover:from-purple-600 hover:to-pink-700 transition-colors"
               >
                 Create Account
               </Button>

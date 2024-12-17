@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { ApiResponse } from "@/types/ApiResponse";
+import { AppLogo } from "@/components/ui/app-logo";
 
 const Page = () => {
   const [verify, {loading}] = useMutation(VERIFY, {
@@ -115,8 +116,9 @@ const Page = () => {
         className="relative w-full max-w-md"
       >
         <div className="bg-gray-900 rounded-2xl shadow-xl border border-gray-800 p-8 mt-16">
-          <div className="mb-6 flex items-center flex-col">
-          <h2 className="text-2xl font-bold  bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+        <div className=" mb-6 flex items-center justify-center"> <AppLogo showText={false} /></div>
+          <div className="mb-6 flex items-center flex-col gap-y-4">
+          <h2 className="text-3xl font-bold  bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
             Verify Your Account
           </h2>
           <p className="text-sm text-muted-foreground text-white">
@@ -148,7 +150,7 @@ const Page = () => {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg font-medium hover:from-purple-600 hover:to-pink-700 transition-colors"
+                className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-medium hover:from-purple-600 hover:to-pink-700 transition-colors"
               >
                Verify Account
               </Button>

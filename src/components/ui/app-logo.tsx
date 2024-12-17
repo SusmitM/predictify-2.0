@@ -32,7 +32,7 @@ export function AppLogo({ showText = true, className }: AppLogoProps) {
       </div>
       
       {showText && (
-        <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+        <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
         Predictify
       </span>
       )}
