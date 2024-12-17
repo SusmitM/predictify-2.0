@@ -17,10 +17,10 @@ export default function RootLayout({
 
   const showSidebar=pathname==="/dashboard" || pathname==="/history";
   return(
-    <div className="min-h-screen bg-gray-950 flex ">
+    <div className={`min-h-screen bg-gray-950 ${showSidebar?"flex":""} `}>
       {showHeaderFooter && <Navbar />} 
       {showSidebar &&  <DashboardSidebar />}
-      <main className="flex-1 overflow-auto">
+      <main className={`flex-1 overflow-auto`}>
         <div className="container mx-auto py-6 px-4">
           {children}
         </div>
