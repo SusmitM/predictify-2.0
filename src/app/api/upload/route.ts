@@ -37,9 +37,10 @@ export const POST=async(req:NextRequest,res:NextResponse)=>{
   
     const buffer = Buffer.from(await file?.arrayBuffer());
     const filename =  file.name.replaceAll(" ", "_");
+    const uniqueFilename=`${uuidv4()}-${filename}`
    
     try {
-        const fileKey = `${userId}${uuidv4()}-${filename}`;
+        const fileKey = `${userId}/${uniqueFilename}`;
         const uploadParams: PutObjectCommandInput = {
             Bucket: process.env.AWS_S3_BUCKET_NAME,
             Key: fileKey,
@@ -57,7 +58,8 @@ export const POST=async(req:NextRequest,res:NextResponse)=>{
             success: true,
             message: "File uploaded successfully",
             data: {
-              url: fileUrl,
+              filename: file.name,
+              uniqueFilename:uniqueFilename
             },
           });
       } catch (error) {

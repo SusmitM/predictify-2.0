@@ -3,11 +3,23 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useToast } from "@/hooks/use-toast";
 import client from "lib/apollo-client";
+import { EXTRACT } from "graphql/mutations";
+import { error } from "console";
 
 const Page = () => {
   const [file, setFile] = useState<File | null>(null); // Keep single file state
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const [extract] = useMutation(EXTRACT, {
+    client,
+    onCompleted: (data) => {
+      console.log("Extracted Content:", data.extract.content);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +35,16 @@ const Page = () => {
       });
       const data=await response.json();
       console.log("🚀 ~ handleSubmit ~ data:", data)
+      if(response.status===200){
+        const result=await extract({
+          variables:{
+            filename:data.data.filename,
+            uniqueFilename:data.data.uniqueFilename
+          },
+          errorPolicy:"all"
+        })
+      }
+      
       
     } catch (error: any) {
       console.error("Upload Error:", error);

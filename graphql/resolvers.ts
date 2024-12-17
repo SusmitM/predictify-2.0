@@ -1,11 +1,24 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { signUpSchema } from "@/schema/signUpSchema";
 import { verifySchema } from "@/schema/verifySchema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { PrismaClient, User } from "@prisma/client";
+import { Textract } from "aws-sdk";
+import { AnyArn } from "aws-sdk/clients/groundstation";
 import bcrypt from "bcryptjs";
 import { GraphQLError } from "graphql";
 import { sendVerificationEmail } from "helpers/sendVerificationEmai";
+import { getServerSession } from "next-auth";
 const prisma = new PrismaClient();
+
+
+const textract = new Textract({
+  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
+
+
 
 export const resolvers = {
   Query: {
@@ -196,5 +209,86 @@ export const resolvers = {
         throw error;
       }
     },
-  },
+
+    extract: async (_: any, args: { filename: string; uniqueFilename: string }): Promise<ApiResponse> => {
+      try {
+        const session = await getServerSession(authOptions);
+        const user = session?.user as User;
+    
+        if (!session || !session.user) {
+          throw new GraphQLError("No session found", {
+            extensions: {
+              code: "UNAUTHENTICATED_USER",
+            },
+          });
+        }
+    
+        const userId = user.id;
+    
+        const params = {
+          Document: {
+            S3Object: {
+              Bucket: process.env.AWS_S3_BUCKET_NAME,
+              Name: `${userId}/${args.uniqueFilename}`,
+            },
+          },
+          FeatureTypes: ["TABLES", "FORMS"],
+        };
+    
+        // Call Amazon Textract to analyze the document
+        const textractResponse = await textract.analyzeDocument(params).promise();
+    
+        // Extract the text or structured data from the response
+        const extractedText = textractResponse?.Blocks?.filter(
+          (block) => block.BlockType === "LINE"
+        )
+          .map((line) => line.Text)
+          .join("\n");
+    
+        const s3Location = `${process.env.CLOUD_FRONT_URL}/${userId}/${args.uniqueFilename}`;
+    
+        const newFileData = {
+          content: extractedText ?? "",
+          filename: args.filename ?? "",
+          s3Location: s3Location,
+          createdAt: new Date().toISOString(),
+        };
+    
+        // Fetch the current `extractedData` array
+        const userRecord = await prisma.user.findUnique({
+          where: { id: userId },
+          select: { extractedData: true },
+        });
+    
+        if (!userRecord) {
+          throw new Error("User not found");
+        }
+    
+        // Filter out any null or undefined values from updatedExtractedData
+        const updatedExtractedData = [
+          ...(userRecord.extractedData || []),
+          newFileData,
+        ].filter((data): data is NonNullable<typeof data> => data !== null && data !== undefined);
+    
+        // Update the user record with the updated array
+        const updatedUser = await prisma.user.update({
+          where: { id: userId },
+          data: {
+            extractedData: updatedExtractedData,
+          },
+        });
+    
+        return {
+          success: true,
+          message: "Text extracted successfully",
+          content: extractedText,
+        };
+      } catch (error) {
+        console.error("Error in extract resolver:", error);
+        throw error;
+      }
+    }
+    
+
+  }    
 };

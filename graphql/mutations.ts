@@ -21,3 +21,12 @@ mutation verify($email:String!,$verificationCode:String!){
   }
 }
 `
+export const EXTRACT=gql`
+mutation extract($filename: String!,$uniqueFilename:String!) {
+  extract(filename: $filename,uniqueFilename:$uniqueFilename) {
+    success
+    message
+    content
+  }
+}`
+

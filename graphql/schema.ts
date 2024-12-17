@@ -26,11 +26,15 @@ type UserResponse {
     message:String!
     data:User
 }
-type FileDataResponse{
+type ExtractData {
+    content: String
+}
+type ExtractResponse{
     success:Boolean!
     message:String!
-    data:[FileData!]!
+    content:String!
 }
+
 
 
 type Query {
@@ -40,6 +44,7 @@ type Query {
 type Mutation {
     signUp(email:String!,password:String,isVerified:Boolean,verificationCode:String): UserResponse
     verify(email:String,verificationCode:String):UserResponse
+    extract(filename:String,uniqueFilename:String):ExtractResponse
 }
 
 `

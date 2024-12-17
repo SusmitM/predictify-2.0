@@ -5,4 +5,5 @@ export interface ApiResponse{
     message:string;
     data?:User;
     extensions?:any;
+    content?:string
 }

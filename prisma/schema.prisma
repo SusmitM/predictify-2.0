@@ -13,15 +13,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model FileData {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  user User @relation(fields: [userId],references: [id])
-  content String
-  filename String
-  s3Location String
-  createdAt   DateTime @default(now())
-}
+// model FileData {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+//   userId String @db.ObjectId
+//   user User @relation(fields: [userId],references: [id])
+//   content String
+//   filename String
+//   s3Location String
+//   createdAt   DateTime @default(now())
+// }
 
 model User {
 id String @id @default(auto()) @map("_id") @db.ObjectId
@@ -30,7 +30,7 @@ password String?
 isVerified Boolean
 verificationCode String?
 verifyCodeExpiry DateTime?
-extractedData FileData[]
+extractedData    Json[]    @default([])
 createdAt   DateTime @default(now())
 updatedAt   DateTime @default(now()) @updatedAt
 }
