@@ -17,10 +17,10 @@ function ActionButton({ icon, label, onClick }: ActionButtonProps) {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 text-gray-200 hover:bg-gray-700 transition-colors"
+      className=" flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition-colors"
     >
       {icon}
-      <span className="hidden sm:inline">{label}</span>
+      <span className="text-sm hidden sm:inline">{label}</span>
     </motion.button>
   );
 }
@@ -101,13 +101,13 @@ export function ModalActions({ text, originalFile, onSpeakToggle }: ModalActions
         label="Download Text"
         onClick={handleDownloadText}
       />
-      {originalFile && (
+      {/* {originalFile && (
         <ActionButton
           icon={<FileDown className="w-4 h-4" />}
           label="Download File"
           onClick={handleDownloadOriginal}
         />
-      )}
+      )} */}
       <ActionButton
         icon={<Volume2 className="w-4 h-4" />}
         label={isSpeaking ? 'Stop' : 'Listen'}

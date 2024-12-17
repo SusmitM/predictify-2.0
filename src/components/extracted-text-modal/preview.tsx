@@ -4,12 +4,13 @@ import { FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface PreviewProps {
-  preview?: string;
+  originalFile?: string;
   fileName: string;
+  fileType:string;
 }
 
-export function Preview({ preview, fileName }: PreviewProps) {
-  const isImage = fileName.match(/\.(jpg|jpeg|png|gif)$/i);
+export function Preview({ originalFile, fileName,fileType }: PreviewProps) {
+  const isImage = fileType==="image";
 
   return (
     <motion.div
@@ -17,10 +18,10 @@ export function Preview({ preview, fileName }: PreviewProps) {
       animate={{ opacity: 1, y: 0 }}
       className="relative rounded-lg overflow-hidden bg-gray-800"
     >
-      {preview ? (
+      {isImage ? (
         <div className="aspect-video">
           <img
-            src={preview}
+            src={originalFile}
             alt={fileName}
             className="w-full h-full object-cover"
           />

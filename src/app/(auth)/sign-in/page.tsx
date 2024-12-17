@@ -53,7 +53,7 @@ const Page = () => {
         });
       }
       if (result?.url) {
-        router.replace("/dashboard");
+        router.replace("/home");
       }
     } catch (error) {
       throw error;

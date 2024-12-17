@@ -15,7 +15,7 @@ export default function RootLayout({
   pathname === '/sign-up' || 
   pathname === '/verify';
 
-  const showSidebar=pathname==="/dashboard" || pathname==="/history";
+  const showSidebar=pathname==="/home" || pathname==="/history";
   return(
     <div className={`min-h-screen bg-gray-950 ${showSidebar?"flex":""} `}>
       {showHeaderFooter && <Navbar />} 

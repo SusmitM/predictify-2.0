@@ -5,10 +5,12 @@ import { History, Home, LogOut, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { AppLogo } from '../ui/app-logo';
+import { signOut } from 'next-auth/react';
+
 
 const menuItems = [
-  { name: 'Home', icon: Home, href: '/dashboard' },
-  { name: 'History', icon: History, href: '/dashboard/history' },
+  { name: 'Home', icon: Home, href: '/home' },
+  { name: 'History', icon: History, href: '/history' },
 ];
 
 interface DesktopNavProps {
@@ -27,22 +29,22 @@ export function DesktopNav({ pathname, isExpanded, onToggleExpand }: DesktopNavP
       animate={{ width: isExpanded ? 256 : 80 }}
       transition={{ duration: 0.3 }}
     >
-      <button
+      {/* <button
         onClick={onToggleExpand}
         className="absolute -right-4 top-6 p-2 bg-gray-900 border border-gray-800 rounded-full hover:bg-gray-800 transition-colors"
       >
         <Menu className="w-4 h-4 text-gray-400" />
-      </button>
+      </button> */}
 
-      <div className="flex flex-col h-full">
-        <div className="p-4">
+      <div className="flex flex-col h-full items-center justify-center">
+        <div className="px-2 py-4">
           <Link href="/" className="flex items-center space-x-3">
             <AppLogo showText={isExpanded} />
           </Link>
         </div>
 
         <nav className="flex-1 px-4 py-2">
-          <ul className="space-y-2">
+          <ul className="space-y-6">
             {menuItems.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
@@ -59,7 +61,7 @@ export function DesktopNav({ pathname, isExpanded, onToggleExpand }: DesktopNavP
                     {isActive && (
                       <motion.div
                         layoutId="activeTab"
-                        className="absolute inset-0 bg-purple-500/10 rounded-lg"
+                        className="absolute inset-0 bg-purple-500/10 rounded-xl"
                         initial={false}
                         transition={{
                           type: "spring",
@@ -68,7 +70,7 @@ export function DesktopNav({ pathname, isExpanded, onToggleExpand }: DesktopNavP
                         }}
                       />
                     )}
-                    <Icon className="w-5 h-5" />
+                    <Icon className="w-6 h-6" />
                     {isExpanded && (
                       <motion.span
                         initial={{ opacity: 0 }}
@@ -87,8 +89,8 @@ export function DesktopNav({ pathname, isExpanded, onToggleExpand }: DesktopNavP
         </nav>
 
         <div className="p-4 border-t border-gray-800">
-          <button className="flex items-center px-3 py-2 w-full rounded-lg text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors">
-            <LogOut className="w-5 h-5" />
+          <button onClick={()=>signOut()} className="flex items-center px-3 py-2 w-full rounded-xl text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors">
+            <LogOut className="w-6 h-6" />
             {isExpanded && (
               <motion.span
                 initial={{ opacity: 0 }}

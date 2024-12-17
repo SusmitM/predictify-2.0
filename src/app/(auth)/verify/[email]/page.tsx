@@ -63,7 +63,7 @@ const Page = () => {
       title: "Code verification successfull",
       description: data.message,
     });
-    router.replace("/dashboard");
+    router.replace("/home");
   };
 
   const handleError = (error: any) => {

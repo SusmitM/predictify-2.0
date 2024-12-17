@@ -11,9 +11,10 @@ interface HistoryCardProps {
   timestamp: string;
   preview?: string;
   text: string;
+  fileType:string;
   originalFile?: string;
   onView: () => void;
-  onDelete: (id: number) => void;
+
 }
 
 export function HistoryCard({
@@ -22,18 +23,14 @@ export function HistoryCard({
   timestamp,
   preview,
   text,
+  fileType,
   originalFile,
   onView,
-  onDelete
+
 }: HistoryCardProps) {
-  const isImage = fileName.match(/\.(jpg|jpeg|png|gif)$/i);
+  const isImage = fileType==="image"?true:false;
   const FileIcon = isImage ? ImageIcon : FileText;
 
-  const handleDelete = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onDelete(id);
-   //TODO ADD TOAST HERE
-  };
 
   return (
     <motion.div
@@ -43,10 +40,10 @@ export function HistoryCard({
     >
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/90" />
       
-      {preview ? (
+      {isImage ? (
         <div className="aspect-[16/9] relative">
           <img
-            src={preview}
+            src={originalFile}
             alt={fileName}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
@@ -90,20 +87,13 @@ export function HistoryCard({
           </div>
 
           <div className="flex items-center gap-2">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleDelete}
-              className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
-            >
-              <Trash2 className="w-4 h-4" />
-            </motion.button>
+            
             
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onView}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 transition-colors text-sm font-medium"
+              className="rounded-xl inline-flex items-center gap-2 px-4 py-2  bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 transition-colors text-sm font-medium"
             >
               <ExternalLink className="w-4 h-4" />
               View Details

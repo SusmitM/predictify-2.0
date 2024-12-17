@@ -13,7 +13,7 @@ export function Content({ text, isGenerating }: ContentProps) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-gray-800 rounded-lg p-4 h-[300px] overflow-auto"
+      className="bg-gray-800 rounded-lg p-4 h-[300px] overflow-auto "
     >
       <TextGenerateEffect words={text} className="text-gray-200" />
     </motion.div>
