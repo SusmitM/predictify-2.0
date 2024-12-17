@@ -1,7 +1,8 @@
 'use client'
 import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
+import {Footer} from '../../components/Footer';
 import { usePathname } from 'next/navigation';
+import { DashboardSidebar } from '@/components/sidebar';
 
 export default function RootLayout({
   children,
@@ -14,11 +15,15 @@ export default function RootLayout({
   pathname === '/sign-up' || 
   pathname === '/verify';
 
+  const showSidebar=pathname==="/dashboard" || pathname==="/history";
   return(
-    <div className="min-h-screen bg-gray-950 flex flex-col">
+    <div className="min-h-screen bg-gray-950 flex ">
       {showHeaderFooter && <Navbar />} 
-      <main>
-        {children}
+      {showSidebar &&  <DashboardSidebar />}
+      <main className="flex-1 overflow-auto">
+        <div className="container mx-auto py-6 px-4">
+          {children}
+        </div>
       </main>
       {showHeaderFooter && <Footer />} 
     </div>

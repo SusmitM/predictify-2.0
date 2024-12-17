@@ -6,9 +6,10 @@ import { FileText, Upload, Zap } from 'lucide-react';
 import { TypewriterEffect } from '@/components/ui/typewriter-effect';
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
 import { Spotlight } from '@/components/ui/spotlight';
-import { FeatureCard } from '@/components/ui/feature-card';
+
 
 import { Button } from '@/components/ui/button';
+import { FeatureCard } from '@/components/feature-card';
 
 
 

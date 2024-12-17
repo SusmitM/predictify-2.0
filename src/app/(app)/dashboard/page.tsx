@@ -5,14 +5,34 @@ import { useToast } from "@/hooks/use-toast";
 import client from "lib/apollo-client";
 import { EXTRACT } from "graphql/mutations";
 import { error } from "console";
+import { FileUpload } from "@/components/file-upload";
+import { ExtractedTextModal } from "@/components/extracted-text-modal";
+
+
 
 const Page = () => {
-  const [file, setFile] = useState<File | null>(null); // Keep single file state
+  
+  const [file, setFile] = useState<File | null>(null); 
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [extractedData, setExtractedData] = useState<{
+    text: string;
+    preview?: string;
+  } | null>(null);
   const { toast } = useToast();
   const [extract] = useMutation(EXTRACT, {
     client,
     onCompleted: (data) => {
+      const text=data.extract.content
+      const preview=file?.type.startsWith('image/') 
+      ? URL.createObjectURL(file)
+      : undefined
+      setExtractedData({text,preview})
+      setShowModal(true);
+      toast({
+        title: "Text extracted successfully!",
+      });
+      
       console.log("Extracted Content:", data.extract.content);
     },
     onError: (error) => {
@@ -21,11 +41,12 @@ const Page = () => {
   });
   
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (file:File) => {
+
     if (!file) return;
 
     try {
+      setFile(file);
       const formData = new FormData();
       formData.append("file", file);
 
@@ -57,27 +78,24 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-red-500 overflow-hidden">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-400 mb-1">
-            Upload File
-          </label>
-          <input
-            type="file"
-            onChange={(e) => setFile(e.target.files?.[0] || null)} // Set single file
-            className="w-full bg-gray-800 text-white rounded-lg p-2"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg font-medium hover:from-purple-600 hover:to-pink-700 transition-colors"
-        >
-          {loading ? "Uploading..." : "Upload"}
-        </button>
-      </form>
-    </div>
+    <div className="max-w-4xl mx-auto">
+   <h1 className="text-3xl font-bold my-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+        Extract Text from Files
+      </h1>
+  
+    <FileUpload onFileUpload={handleSubmit} />
+    
+    {extractedData && (
+      <ExtractedTextModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        text={extractedData.text}
+        fileName={file?.name??""}
+        preview={extractedData.preview}
+      
+      />
+    )}
+  </div>
   );
 };
 
