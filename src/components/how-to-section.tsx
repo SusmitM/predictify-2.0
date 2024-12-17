@@ -13,7 +13,7 @@ const steps = [
   },
   {
     title: "Run the Tool",
-    description: "The extraction starts automatically the moment you upload the file. Our advanced OCR processes your image instantly.",
+    description: "The extraction starts automatically the moment you upload the file. OCR processes your image instantly.",
     icon: <Zap className="w-6 h-6 text-pink-400" />,
     step: 2
   },
@@ -27,7 +27,7 @@ const steps = [
 
 export function HowToSection() {
   return (
-    <div className="relative py-32 bg-gray-900/50">
+    <div className="relative py-32 bg-gray-900/50 rounded-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ y: 20, opacity: 0 }}

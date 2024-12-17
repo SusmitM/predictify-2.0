@@ -1,4 +1,4 @@
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, Twitter } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -11,7 +11,7 @@ export function Footer() {
           
           <div className="flex items-center gap-4">
             <a 
-              href="https://github.com" 
+              href="https://github.com/SusmitM" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white transition-colors"
@@ -19,18 +19,24 @@ export function Footer() {
               <Github className="w-5 h-5" />
             </a>
             <a 
-              href="https://linkedin.com" 
+              href="https://www.linkedin.com/in/susmit-mukherjee" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white transition-colors"
             >
               <Linkedin className="w-5 h-5" />
             </a>
+            <a 
+              href="https://www.linkedin.com/in/susmit-mukherjee" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <Twitter className="w-5 h-5" />
+            </a>
           </div>
           
-          <p className="text-gray-400 text-sm">
-            Made with ❤️ by Susmit
-          </p>
+          
         </div>
       </div>
     </footer>
