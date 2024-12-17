@@ -1,50 +1,49 @@
 import { gql } from "@apollo/client";
 
+export const typeDefs = gql`
+  scalar DateTime
 
-export const typeDefs= gql`
-type FileData {
+  type FileData {
     id: ID!
-    userId: ID!
     content: String!
     filename: String!
     s3Location: String!
-    createdAt:String!
-}
+    createdAt: DateTime!
+  }
 
-type User {
+  type User {
     id: ID!
-    email:String!
-    isVerified:Boolean!
-    verificationCode:String
-    extractedData:[FileData]
-    createdAt:String!
-    updatedAt:String!
-}
+    email: String!
+    isVerified: Boolean!
+    verificationCode: String
+    extractedData: [FileData!] # Make it nullable if it can be null, e.g., [FileData]
+    createdAt: DateTime!
+    updatedAt: DateTime!
+  }
 
-type UserResponse {
-    success:Boolean!
-    message:String!
-    data:User
-}
-type ExtractData {
+  type UserResponse {
+    success: Boolean!
+    message: String!
+    data: User
+  }
+
+  type ExtractData {
     content: String
-}
-type ExtractResponse{
-    success:Boolean!
-    message:String!
-    content:String!
-}
+  }
 
+  type ExtractResponse {
+    success: Boolean!
+    message: String!
+    content: String!
+  }
 
+  type Query {
+    getUser(id: ID!): UserResponse
+  }
 
-type Query {
-    getUser(id:ID!): UserResponse
-}
-
-type Mutation {
-    signUp(email:String!,password:String,isVerified:Boolean,verificationCode:String): UserResponse
-    verify(email:String,verificationCode:String):UserResponse
-    extract(filename:String,uniqueFilename:String):ExtractResponse
-}
-
-`
+  type Mutation {
+    signUp(email: String!, password: String, isVerified: Boolean, verificationCode: String): UserResponse
+    verify(email: String, verificationCode: String): UserResponse
+    extract(filename: String, uniqueFilename: String): ExtractResponse
+  }
+`;

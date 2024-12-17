@@ -4,7 +4,7 @@ import { verifySchema } from "@/schema/verifySchema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { PrismaClient, User } from "@prisma/client";
 import { Textract } from "aws-sdk";
-import { AnyArn } from "aws-sdk/clients/groundstation";
+import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
 import { GraphQLError } from "graphql";
 import { sendVerificationEmail } from "helpers/sendVerificationEmai";
@@ -248,6 +248,7 @@ export const resolvers = {
         const s3Location = `${process.env.CLOUD_FRONT_URL}/${userId}/${args.uniqueFilename}`;
     
         const newFileData = {
+          _id: uuidv4(),
           content: extractedText ?? "",
           filename: args.filename ?? "",
           s3Location: s3Location,
