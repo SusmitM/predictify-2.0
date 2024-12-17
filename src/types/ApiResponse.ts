@@ -5,5 +5,7 @@ export interface ApiResponse{
     message:string;
     data?:User;
     extensions?:any;
-    content?:string
+    content?:string;
+    s3Location?:string;
+    fileType?:string;
 }

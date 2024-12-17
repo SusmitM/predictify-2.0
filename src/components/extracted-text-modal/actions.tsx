@@ -29,11 +29,11 @@ function ActionButton({ icon, label, onClick }: ActionButtonProps) {
 
 interface ModalActionsProps {
   text: string;
-  originalFile?: string;
+  fileLink?: string;
   onSpeakToggle: (speaking: boolean) => void;
 }
 
-export function ModalActions({ text, originalFile, onSpeakToggle }: ModalActionsProps) {
+export function ModalActions({ text, fileLink, onSpeakToggle }: ModalActionsProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   
   const handleCopy = () => {
@@ -57,9 +57,9 @@ export function ModalActions({ text, originalFile, onSpeakToggle }: ModalActions
   };
 
   const handleDownloadOriginal = () => {
-    if (originalFile) {
+    if (fileLink) {
       const a = document.createElement('a');
-      a.href = originalFile;
+      a.href = fileLink;
       a.download = 'original-file';
       document.body.appendChild(a);
       a.click();

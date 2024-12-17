@@ -37,6 +37,8 @@ export const typeDefs = gql`
     success: Boolean!
     message: String!
     content: String 
+    s3Location:String
+    fileType:String
   }
 
   type Query {

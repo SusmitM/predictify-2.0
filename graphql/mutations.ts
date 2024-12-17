@@ -27,6 +27,8 @@ mutation extract($filename: String!,$uniqueFilename:String!) {
     success
     message
     content
+    s3Location
+    fileType
   }
 }`
 

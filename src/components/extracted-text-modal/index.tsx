@@ -8,22 +8,22 @@ import { Content } from './content';
 import { ModalActions } from './actions';
 
 interface ExtractedTextModalProps {
+  page:"home" | "history";
   isOpen: boolean;
   onClose: () => void;
   text: string;
-  preview?: string;
   fileName: string;
-  originalFile?: string;
+  fileLink?: string;
   fileType?:string;
 }
 
 export function ExtractedTextModal({
+  page,
   isOpen,
   onClose,
   text,
-  preview,
   fileName,
-  originalFile,
+  fileLink,
   fileType
 }: ExtractedTextModalProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -38,14 +38,14 @@ export function ExtractedTextModal({
               <span className='text-2xl bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600'>Extracted Text</span>
               <ModalActions
                 text={text}
-                originalFile={originalFile}
+                fileLink={fileLink}
                 onSpeakToggle={setIsSpeaking}
               />
             </Dialog.Title>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Preview originalFile={originalFile} fileName={fileName} fileType={fileType??"file"} />
-              <Content text={text} isGenerating={!isSpeaking} />
+              <Preview fileLink={fileLink} fileName={fileName} fileType={fileType??"file"} />
+              <Content text={text} isGenerating={!isSpeaking} page={page} />
             </div>
           </div>
         </Dialog.Content>

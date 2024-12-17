@@ -349,6 +349,8 @@ export const resolvers = {
           success: true,
           message: "Text extracted and file saved to db successfully",
           content: extractedText,
+          s3Location,
+          fileType
         };
       } catch (error) {
         

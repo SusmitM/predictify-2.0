@@ -14,18 +14,20 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [extractedData, setExtractedData] = useState<{
+
     text: string;
-    preview?: string;
+    preview: string;
+    fileType:string
   } | null>(null);
   const { toast } = useToast();
+ 
   const [extract] = useMutation(EXTRACT, {
     client,
     onCompleted: (data) => {
       const text = data.extract.content;
-      const preview = file?.type.startsWith("image/")
-        ? URL.createObjectURL(file)
-        : undefined;
-      setExtractedData({ text, preview });
+      const preview = data.extract.s3Location;
+      const fileType=data.extract.fileType;
+      setExtractedData({ text, preview,fileType });
       setShowModal(true);
 
       toast({
@@ -95,11 +97,13 @@ const Page = () => {
 
       {extractedData && (
         <ExtractedTextModal
+        page="home"
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           text={extractedData.text}
           fileName={file?.name ?? ""}
-          preview={extractedData.preview}
+         fileLink={extractedData.preview}
+         fileType={extractedData.fileType}
         />
       )}
     </div>

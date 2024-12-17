@@ -51,7 +51,7 @@ export function HistoryCard({
         </div>
       ) : (
         <div className="aspect-[16/9] bg-gray-800/50 flex items-center justify-center">
-          <FileIcon className="w-16 h-16 text-gray-600" />
+          <FileIcon className="w-16 h-16 text-white" />
         </div>
       )}
 
