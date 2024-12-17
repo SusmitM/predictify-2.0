@@ -23,7 +23,7 @@ export function DesktopNav({ pathname, isExpanded, onToggleExpand }: DesktopNavP
   return (
     <motion.div
       className={cn(
-        "hidden md:block h-screen bg-gray-900/50 backdrop-blur-sm border-r border-gray-800 relative group",
+        "hidden md:block fixed h-screen bg-gray-900/50 backdrop-blur-sm border-r border-gray-800  group",
         isExpanded ? "w-64" : "w-20"
       )}
       animate={{ width: isExpanded ? 256 : 80 }}
