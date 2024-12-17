@@ -47,6 +47,46 @@ export const resolvers = {
         };
       }
     },
+    getExtractedData: async (_: any) => {
+      try {
+        const session = await getServerSession(authOptions);
+        const user = session?.user as User;
+    
+        if (!session || !session.user) {
+          throw new GraphQLError("No session found", {
+            extensions: {
+              code: "UNAUTHENTICATED_USER",
+            },
+          });
+        }
+    
+        const userId = user.id;
+    
+        // Fetch the user from the database
+        const userRecord = await prisma.user.findUnique({
+          where: { id: userId },
+          select: { extractedData: true },
+        });
+    
+        if (!userRecord) {
+          throw new GraphQLError("User not found", {
+            extensions: {
+              code: "USER_NOT_FOUND",
+            },
+          });
+        }
+    
+        return {
+          success:true,
+          message:"History fetched succesfully",
+          extractedData:userRecord.extractedData || []
+        }
+      } catch (error) {
+        console.error("Error in getExtractedData resolver:", error);
+        throw error
+      }
+    }
+    
   },
 
   Mutation: {
@@ -289,7 +329,7 @@ export const resolvers = {
         throw error;
       }
     }
-    
+   
 
   }    
 };

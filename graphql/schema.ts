@@ -4,11 +4,11 @@ export const typeDefs = gql`
   scalar DateTime
 
   type FileData {
-    id: ID!
-    content: String!
-    filename: String!
-    s3Location: String!
-    createdAt: DateTime!
+    _id: ID
+    content: String
+    filename: String
+    s3Location: String
+    createdAt: DateTime
   }
 
   type User {
@@ -27,18 +27,20 @@ export const typeDefs = gql`
     data: User
   }
 
-  type ExtractData {
-    content: String
-  }
-
   type ExtractResponse {
     success: Boolean!
     message: String!
-    content: String!
+    extractedData: [FileData] # Change to an array of FileData
   }
 
   type Query {
     getUser(id: ID!): UserResponse
+    getExtractedData: ExtractResponse
+  }
+
+  type Query {
+    getUser(id: ID!): UserResponse
+    getExtractedData: ExtractResponse
   }
 
   type Mutation {

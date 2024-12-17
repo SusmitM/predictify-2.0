@@ -16,3 +16,21 @@ export const GET_USER=gql`
 }
 
 `
+
+
+
+export const GET_EXTRACTED_DATA = gql`
+  query GetExtractedData {
+    getExtractedData {
+      success
+      message
+      extractedData {
+        _id
+        content
+        filename
+        s3Location
+        createdAt
+      }
+    }
+  }
+`;
