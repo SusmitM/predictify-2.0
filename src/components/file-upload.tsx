@@ -1,5 +1,6 @@
 'use client';
 
+import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/utils/cn';
 import { motion } from 'framer-motion';
 import { FileText, Upload } from 'lucide-react';
@@ -7,11 +8,12 @@ import { useCallback, useState } from 'react';
 
 interface FileUploadProps {
   onFileUpload: (file: File) => void;
+  loading:boolean;
 }
 
-export function FileUpload({ onFileUpload }: FileUploadProps) {
+export function FileUpload({ onFileUpload,loading }: FileUploadProps) {
   const [isDragging, setIsDragging] = useState(false);
-
+  const{toast}=useToast()
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -29,16 +31,52 @@ export function FileUpload({ onFileUpload }: FileUploadProps) {
 
     const files = Array.from(e.dataTransfer.files);
     if (files.length > 0) {
-      onFileUpload(files[0]);
+      const file = files[0];
+      const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf']; // Allowed MIME types
+      if (file.size > 5 * 1024 * 1024) { // Check if file size exceeds 5MB
+        toast({
+          title: "Upload Failed",
+          description: "File size exceeds 5MB limit.",
+          variant: "destructive"
+        });
+        return;
+      }
+      if (!validTypes.includes(file.type)) { // Check if file type is valid
+        toast({
+          title: "Invalid File Type",
+          description: "Please upload JPG, PNG, GIF, or PDF files.",
+          variant: "destructive"
+        });
+        return;
+      }
+      onFileUpload(file);
     }
-  }, [onFileUpload]);
+  }, [onFileUpload, toast]);
 
   const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length > 0) {
-      onFileUpload(files[0]);
+      const file = files[0];
+      const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf']; // Allowed MIME types
+      if (file.size > 5 * 1024 * 1024) { // Check if file size exceeds 5MB
+        toast({
+          title: "Upload Failed",
+          description: "File size exceeds 5MB limit.",
+          variant: "destructive"
+        });
+        return;
+      }
+      if (!validTypes.includes(file.type)) { // Check if file type is valid
+        toast({
+          title: "Invalid File Type",
+          description: "Please upload JPG, PNG, GIF, or PDF files.",
+          variant: "destructive"
+        });
+        return;
+      }
+      onFileUpload(file);
     }
-  }, [onFileUpload]);
+  }, [onFileUpload, toast]);
 
   return (
     <div
@@ -55,7 +93,8 @@ export function FileUpload({ onFileUpload }: FileUploadProps) {
         type="file"
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         onChange={handleFileInput}
-        accept="image/*,.pdf,.doc,.docx"
+        accept=".jpg,.jpeg,.png,.gif,.pdf" 
+        disabled={loading}
       />
       
       <div className="p-8 text-center">
@@ -77,14 +116,14 @@ export function FileUpload({ onFileUpload }: FileUploadProps) {
               Drop your file here or click to upload
             </p>
             <p className="mt-2 text-sm text-gray-400">
-              Supports JPG, PNG, GIF, PDF & More
+              Supports JPG, PNG, JPEG, GIF & Single Page PDF
             </p>
           </div>
           
           <div className="flex items-center gap-8 mt-4 text-sm text-gray-400">
             <div className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
-              <span>Up to 10MB</span>
+              <span>Up to 5MB</span>
             </div>
           </div>
         </motion.div>

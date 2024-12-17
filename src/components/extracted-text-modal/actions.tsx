@@ -5,6 +5,7 @@ import { Copy, Download, FileDown, Volume2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
+
 interface ActionButtonProps {
   icon: React.ReactNode;
   label: string;
@@ -12,6 +13,7 @@ interface ActionButtonProps {
 }
 
 function ActionButton({ icon, label, onClick }: ActionButtonProps) {
+
   return (
     <motion.button
       whileHover={{ scale: 1.05 }}
@@ -33,11 +35,11 @@ interface ModalActionsProps {
 
 export function ModalActions({ text, originalFile, onSpeakToggle }: ModalActionsProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
-
+  
   const handleCopy = () => {
     navigator.clipboard.writeText(text);
-       //TODO ADD TOAST HERE
-    // toast.success('Text copied to clipboard!');
+   
+   
   };
 
   const handleDownloadText = () => {
@@ -50,8 +52,8 @@ export function ModalActions({ text, originalFile, onSpeakToggle }: ModalActions
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-       //TODO ADD TOAST HERE
-    //toast.success('Text downloaded successfully!');
+    
+      
   };
 
   const handleDownloadOriginal = () => {
@@ -62,12 +64,12 @@ export function ModalActions({ text, originalFile, onSpeakToggle }: ModalActions
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-         //TODO ADD TOAST HERE
-      // toast.success('Original file download started!');
+      
     }
   };
 
   const handleSpeak = () => {
+    
     if ('speechSynthesis' in window) {
       if (isSpeaking) {
         window.speechSynthesis.cancel();
@@ -83,10 +85,7 @@ export function ModalActions({ text, originalFile, onSpeakToggle }: ModalActions
         setIsSpeaking(true);
         onSpeakToggle(true);
       }
-    } else {
-         //TODO ADD TOAST HERE
-      //toast.error('Text-to-speech is not supported in your browser');
-    }
+    } 
   };
 
   return (

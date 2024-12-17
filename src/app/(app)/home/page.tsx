@@ -7,12 +7,10 @@ import { EXTRACT } from "graphql/mutations";
 import { error } from "console";
 import { FileUpload } from "@/components/file-upload";
 import { ExtractedTextModal } from "@/components/extracted-text-modal";
-
-
+import { Loader2 } from "lucide-react";
 
 const Page = () => {
-  
-  const [file, setFile] = useState<File | null>(null); 
+  const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [extractedData, setExtractedData] = useState<{
@@ -23,50 +21,51 @@ const Page = () => {
   const [extract] = useMutation(EXTRACT, {
     client,
     onCompleted: (data) => {
-      const text=data.extract.content
-      const preview=file?.type.startsWith('image/') 
-      ? URL.createObjectURL(file)
-      : undefined
-      setExtractedData({text,preview})
+      const text = data.extract.content;
+      const preview = file?.type.startsWith("image/")
+        ? URL.createObjectURL(file)
+        : undefined;
+      setExtractedData({ text, preview });
       setShowModal(true);
+
       toast({
         title: "Text extracted successfully!",
+        variant:"success"
       });
-      
-      console.log("Extracted Content:", data.extract.content);
+
     },
     onError: (error) => {
       console.error(error);
+      toast({
+        title: "Text extracted failed!",
+        description:error.message|| "Unexpected error occured",
+        variant:"destructive"
+      });
     },
   });
-  
 
-  const handleSubmit = async (file:File) => {
-
+  const handleSubmit = async (file: File) => {
     if (!file) return;
-
+    setLoading(true)
     try {
       setFile(file);
       const formData = new FormData();
       formData.append("file", file);
 
-      const response=await fetch("/api/upload", {
+      const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
       });
-      const data=await response.json();
-      console.log("🚀 ~ handleSubmit ~ data:", data)
-      if(response.status===200){
-        const result=await extract({
-          variables:{
-            filename:data.data.filename,
-            uniqueFilename:data.data.uniqueFilename
+      const data = await response.json();
+      if (response.status === 200) {
+        const result = await extract({
+          variables: {
+            filename: data.data.filename,
+            uniqueFilename: data.data.uniqueFilename,
           },
-          errorPolicy:"all"
-        })
+          errorPolicy: "all",
+        });
       }
-      
-      
     } catch (error: any) {
       console.error("Upload Error:", error);
       toast({
@@ -75,30 +74,36 @@ const Page = () => {
         variant: "destructive",
       });
     }
+    finally{
+      setLoading(false)
+    }
   };
 
   return (
     <div className="max-w-4xl mx-auto">
-   <h1 className="text-3xl font-bold my-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+     {loading && (
+            <div className="absolute right-5 bottom-10 bg-white text-black w-72 p-6 rounded-xl shadow-lg flex items-center space-x-3">
+              <Loader2 className="h-6 w-6 animate-spin text-purple-600" />
+              <span className="text-lg">Processing your file...</span>
+            </div>
+          )}
+      <h1 className="text-3xl font-bold my-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
         Extract Text from Files
       </h1>
-  
-    <FileUpload onFileUpload={handleSubmit} />
-    
-    {extractedData && (
-      <ExtractedTextModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        text={extractedData.text}
-        fileName={file?.name??""}
-        preview={extractedData.preview}
-      
-      />
-    )}
-  </div>
+
+      <FileUpload loading={loading} onFileUpload={handleSubmit} />
+
+      {extractedData && (
+        <ExtractedTextModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          text={extractedData.text}
+          fileName={file?.name ?? ""}
+          preview={extractedData.preview}
+        />
+      )}
+    </div>
   );
 };
-
-
 
 export default Page;
