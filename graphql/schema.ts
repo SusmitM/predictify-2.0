@@ -8,6 +8,7 @@ export const typeDefs = gql`
     content: String
     filename: String
     s3Location: String
+    fileType:String
     createdAt: DateTime
   }
 
@@ -27,21 +28,26 @@ export const typeDefs = gql`
     data: User
   }
 
-  type ExtractResponse {
+  type GetExtractDataResponse {
     success: Boolean!
     message: String!
     extractedData: [FileData]! 
   }
+  type ExtractResponse {
+    success: Boolean!
+    message: String!
+    content: String 
+  }
 
   type Query {
     getUser(id: ID!): UserResponse
-    getExtractedData: ExtractResponse
+    getExtractedData: GetExtractDataResponse
   }
 
 
   type Mutation {
     signUp(email: String!, password: String, isVerified: Boolean, verificationCode: String): UserResponse
     verify(email: String, verificationCode: String): UserResponse
-    extract(filename: String, uniqueFilename: String): ExtractResponse
+    extract(filename: String!, uniqueFilename: String!): ExtractResponse
   }
 `;

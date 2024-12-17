@@ -293,12 +293,20 @@ export const resolvers = {
     
         const s3Location = `${process.env.CLOUD_FRONT_URL}/${userId}/${args.uniqueFilename}`;
     
+        const fileType = args.filename?.toLowerCase().endsWith('.jpg') || 
+                         args.filename?.toLowerCase().endsWith('.jpeg') || 
+                         args.filename?.toLowerCase().endsWith('.png') || 
+                         args.filename?.toLowerCase().endsWith('.gif') 
+                         ? 'image' 
+                         : 'file';
+
         const newFileData = {
           _id: uuidv4(),
           content: extractedText ?? "",
           filename: args.filename ?? "",
           s3Location: s3Location,
           createdAt: new Date().toISOString(),
+          fileType: fileType,
         };
     
         // Fetch the current `extractedData` array

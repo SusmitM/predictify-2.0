@@ -28,6 +28,7 @@ export const GET_EXTRACTED_DATA = gql`
         _id
         content
         filename
+        fileType
         s3Location
         createdAt
       }
