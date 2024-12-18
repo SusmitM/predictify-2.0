@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Meteors } from "@/components/ui/meteor-preview";
 import { TypewriterEffect } from "@/components/ui/typewriter-effect";
+import { Button } from "./ui/moving-border";
+import { ArrowRight } from "lucide-react";
 
 export function Hero() {
   const words = [
@@ -39,7 +41,7 @@ export function Hero() {
           >
             Predictify lets you transform images into text with accuracy and
             speed, powered by our
-            <span className="text-purple-400 font-medium">  Advanced OCR  </span>
+            <span className="text-purple-400 font-medium"> Advanced OCR </span>
             technology.
           </motion.p>
 
@@ -50,17 +52,17 @@ export function Hero() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Link
-              href="/signup"
-              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full text-white font-medium hover:from-purple-600 hover:to-pink-700 transition-all duration-200 transform hover:scale-105"
+              href="/sign-up"
             >
-              Get Started Free
-            </Link>
-            <Link
-              href="/signin"
-              className="px-8 py-4 bg-gray-900 border border-gray-800 rounded-full text-gray-300 font-medium hover:bg-gray-800 hover:text-white transition-all duration-200 transform hover:scale-105"
+             <Button
+              borderRadius="0.5rem"
+              className="h-12 bg-gradient-to-r from-purple-500 to-pink-600
+               text-white font-semibold text-base  border-2 border-purple-500 "
             >
-              Sign In
+              Try Now <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
             </Link>
+            
           </motion.div>
         </motion.div>
       </div>

@@ -5,7 +5,7 @@ import { Meteors } from '@/components/ui/meteor-preview';
 import { FileText, Upload, Zap } from 'lucide-react';
 import { TypewriterEffect } from '@/components/ui/typewriter-effect';
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
-import { Spotlight } from '@/components/ui/spotlight';
+
 
 
 import { Button } from '@/components/ui/button';

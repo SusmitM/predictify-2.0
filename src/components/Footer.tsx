@@ -27,7 +27,7 @@ export function Footer() {
               <Linkedin className="w-5 h-5" />
             </a>
             <a 
-              href="https://www.linkedin.com/in/susmit-mukherjee" 
+              href="https://x.com/SusmitMukherje5" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white transition-colors"
