@@ -82,7 +82,7 @@ export const MovingBorder = ({
   ry?: string;
   [key: string]: any;
 }) => {
-  // @ts-ignore
+  // @ts-expect-error: TypeScript does not recognize the ref type for pathRef
   const pathRef = useRef<any>();
   const progress = useMotionValue<number>(0);
 
