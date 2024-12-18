@@ -51,14 +51,19 @@ const Page = () => {
 
   return (
     <div className="space-y-6">
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+
+      <h1 className=" text-center my-12 text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
         Extraction History
       </h1>
       
-    </div>
-
-    <motion.div 
+    
+{
+  data?.getExtractedData?.extractedData.length===0?
+  (<div className="text-center text-red-600 mt-8">
+    <p className="text-xl font-bold">No Data Found</p>
+   
+  </div>)
+  :(<motion.div 
       className="grid gap-6 grid-cols-1 lg:grid-cols-3"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -81,7 +86,9 @@ const Page = () => {
         
         />
       ))}
-    </motion.div>
+    </motion.div>)
+}
+    
 
     {selectedItem && (
       <ExtractedTextModal

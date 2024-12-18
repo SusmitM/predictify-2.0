@@ -89,7 +89,7 @@ const Page = () => {
               <span className="text-lg">Processing your file...</span>
             </div>
           )}
-      <h1 className="text-3xl font-bold my-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+      <h1 className="text-center text-3xl font-bold my-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
         Extract Text from Files
       </h1>
 

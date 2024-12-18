@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { cn } from '@/utils/cn';
-import { History, Home, LogOut, Menu } from 'lucide-react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { AppLogo } from '../ui/app-logo';
-import { signOut } from 'next-auth/react';
-
+import { cn } from "@/utils/cn";
+import { History, Home, LogOut, Menu } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { AppLogo } from "../ui/app-logo";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const menuItems = [
-  { name: 'Home', icon: Home, href: '/home' },
-  { name: 'History', icon: History, href: '/history' },
+  { name: "Home", icon: Home, href: "/home" },
+  { name: "History", icon: History, href: "/history" },
 ];
 
 interface DesktopNavProps {
@@ -19,7 +19,12 @@ interface DesktopNavProps {
   onToggleExpand: () => void;
 }
 
-export function DesktopNav({ pathname, isExpanded, onToggleExpand }: DesktopNavProps) {
+export function DesktopNav({
+  pathname,
+  isExpanded,
+  onToggleExpand,
+}: DesktopNavProps) {
+  const router = useRouter();
   return (
     <motion.div
       className={cn(
@@ -50,38 +55,37 @@ export function DesktopNav({ pathname, isExpanded, onToggleExpand }: DesktopNavP
               const Icon = item.icon;
 
               return (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      'flex items-center px-3 py-2 rounded-lg transition-colors relative group/item',
-                      isActive ? 'text-white' : 'text-gray-400 hover:text-white'
-                    )}
-                  >
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeTab"
-                        className="absolute inset-0 bg-purple-500/10 rounded-xl"
-                        initial={false}
-                        transition={{
-                          type: "spring",
-                          stiffness: 500,
-                          damping: 30,
-                        }}
-                      />
-                    )}
-                    <Icon className="w-6 h-6" />
-                    {isExpanded && (
-                      <motion.span
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="ml-3"
-                      >
-                        {item.name}
-                      </motion.span>
-                    )}
-                  </Link>
+                <li
+                  key={item.name}
+                  onClick={() => router.push(item.href)}
+                  className={cn(
+                    "flex items-center px-3 py-2 rounded-lg transition-colors relative group/item",
+                    isActive ? "text-white" : "text-gray-400 hover:text-white"
+                  )}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute inset-0 bg-purple-500/10 rounded-xl"
+                      initial={false}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                  <Icon className="w-6 h-6" />
+                  {isExpanded && (
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="ml-3"
+                    >
+                      {item.name}
+                    </motion.span>
+                  )}
                 </li>
               );
             })}
@@ -89,7 +93,10 @@ export function DesktopNav({ pathname, isExpanded, onToggleExpand }: DesktopNavP
         </nav>
 
         <div className="p-4 border-t border-gray-800">
-          <button onClick={()=>signOut({ callbackUrl: '/' })} className="flex items-center px-3 py-2 w-full rounded-xl text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors">
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="flex items-center px-3 py-2 w-full rounded-xl text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors"
+          >
             <LogOut className="w-6 h-6" />
             {isExpanded && (
               <motion.span
