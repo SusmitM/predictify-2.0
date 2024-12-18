@@ -145,7 +145,7 @@ const handleError = (error: any) => {
                     <Input
                       {...field}
                       placeholder="you@example.com"
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg
+                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl
                        focus:outline-none focus:border-2  focus:border-purple-500 text-white"
                        style={{ boxShadow: "none" }}
                        />
@@ -167,7 +167,7 @@ const handleError = (error: any) => {
                     <Input
                       {...field}
                       type="password"
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg
+                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl
                       focus:outline-none focus:border-2  focus:border-purple-500 text-white"
                       style={{ boxShadow: "none" }}
                       placeholder="••••••••"

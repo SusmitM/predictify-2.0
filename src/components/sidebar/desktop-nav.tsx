@@ -89,7 +89,7 @@ export function DesktopNav({ pathname, isExpanded, onToggleExpand }: DesktopNavP
         </nav>
 
         <div className="p-4 border-t border-gray-800">
-          <button onClick={()=>signOut()} className="flex items-center px-3 py-2 w-full rounded-xl text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors">
+          <button onClick={()=>signOut({ callbackUrl: '/' })} className="flex items-center px-3 py-2 w-full rounded-xl text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors">
             <LogOut className="w-6 h-6" />
             {isExpanded && (
               <motion.span
