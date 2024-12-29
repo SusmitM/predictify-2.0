@@ -103,12 +103,12 @@ const Page = () => {
                     <Input
                       type="email"
                       className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl
-                       focus:outline-none focus:border-2  focus:border-purple-500 text-white"
+                       focus:outline-none focus:border-2  focus:border-purple-500 text-white placeholder:text-[#565656]"
                       placeholder="you@example.com"
                       {...field}
                       style={{ boxShadow: "none" }}
                     />
-                    <FormMessage />
+                    <FormMessage className="text-red-500" />
                   </FormItem>
                 )}
               />
@@ -123,12 +123,12 @@ const Page = () => {
                     <Input
                       type="password"
                       className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl
-                       focus:outline-none focus:border-2  focus:border-purple-500 text-white"
+                       focus:outline-none focus:border-2  focus:border-purple-500 text-white placeholder:text-[#565656]"
                       placeholder="••••••••"
                       {...field}
                       style={{ boxShadow: "none" }}
                     />
-                    <FormMessage />
+                    <FormMessage className="text-red-500" />
                   </FormItem>
                 )}
               />

@@ -146,13 +146,13 @@ const handleError = (error: any) => {
                       {...field}
                       placeholder="you@example.com"
                       className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl
-                       focus:outline-none focus:border-2  focus:border-purple-500 text-white"
+                       focus:outline-none focus:border-2  focus:border-purple-500 text-white placeholder:text-[#565656]"
                        style={{ boxShadow: "none" }}
                        />
                     <p className="text-sm text-muted-foreground">
                       We&apos;ll send you a verification code
                     </p>
-                    <FormMessage />
+                    <FormMessage className="text-red-500" />
                   </FormItem>
                 )}
               />
@@ -168,11 +168,11 @@ const handleError = (error: any) => {
                       {...field}
                       type="password"
                       className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl
-                      focus:outline-none focus:border-2  focus:border-purple-500 text-white"
+                      focus:outline-none focus:border-2  focus:border-purple-500 text-white placeholder:text-[#565656]"
                       style={{ boxShadow: "none" }}
                       placeholder="••••••••"
                     />
-                    <FormMessage />
+                    <FormMessage className="text-red-500" />
                   </FormItem>
                 )}
               />

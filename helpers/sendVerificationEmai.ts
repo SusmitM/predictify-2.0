@@ -5,11 +5,12 @@ import { GraphQLError } from "graphql";
 export const sendVerificationEmail=async(email:string,verifyCode:string):Promise<ApiResponse>=>{
     try {
         const {data,error}=await resend.emails.send({
-            from:'Predictify <onboarding@resend.dev>',
+            from:'Predictify <onboarding@mukion.in>',
             to:[email],
             subject:'Predictify | Verification code',
             react: VerificationEmail({otp:verifyCode})
         })
+      
         return {
             success:true,
               message:"Verification email send successfully "
